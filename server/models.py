@@ -3,7 +3,7 @@
 import peewee as models
 import peewee_async
 
-database = peewee_async.PooledMySQLDatabase('blog', max_connections=10, **{'charset': 'utf8', 'use_unicode': True, 'host': '127.0.0.1', 'user': 'root', 'password': 'Nkx.29083X'})
+database = peewee_async.PooledMySQLDatabase('blog', max_connections=10, **{'charset': 'utf8', 'use_unicode': True, 'host': '127.0.0.1', 'user': '****', 'password': '****'})
 
 Objects = peewee_async.Manager(database)
 
