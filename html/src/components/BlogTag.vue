@@ -20,10 +20,10 @@
             }
         },
         created(){
-            var url = this.HOST + "taglist";
+            var url = this.HOST + "tag";
             this.$axios.get(url)
             .then(res => {
-                this.tags = res.data.data.tag;
+                this.tags = res.data;
             })
             .catch(error => {
                 console.log(error);

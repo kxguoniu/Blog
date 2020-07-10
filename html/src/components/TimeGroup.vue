@@ -20,17 +20,16 @@
             }
         },
         created(){
-            var url = this.HOST + 'bloglist'
+            var url = this.HOST + 'search'
             this.$axios({
                 method: 'get',
                 url: url,
                 params:{
-                    search: 'group',
-                    flag: '1'
+                    type: 'group'
                 }
             })
             .then(res => {
-                this.bloggroup = res.data.data;
+                this.bloggroup = res.data;
             })
             .catch(error => {
                 console.log(error);

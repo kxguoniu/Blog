@@ -218,7 +218,7 @@
         methods: {
             // 首页展示
             sumcount(){
-                var url = this.HOST + 'countview'
+                var url = this.HOST + 'visit'
                 this.$axios({
                     method: 'get',
                     url: url

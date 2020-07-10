@@ -68,7 +68,7 @@
         },
         created(){
             if (this.GLOBAL.INDEX == 0){
-                var counturl = this.HOST + 'countview'
+                var counturl = this.HOST + 'visit'
                 this.$axios({
                     method: 'post',
                     url: counturl,
@@ -83,10 +83,10 @@
                     console.log(error)
                 })
             }
-            var url = this.HOST + 'taglist'
+            var url = this.HOST + 'category'
             this.$axios.get(url)
             .then(res => {
-                this.headers = res.data.data.category;
+                this.headers = res.data;
             })
             .catch(error =>{
                 console.log(error);

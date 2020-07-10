@@ -24,10 +24,16 @@
         created(){
             //var url = "/static/new.json";
             //this.$axios.get(url)
-            var url = this.HOST + "newblog";
-            this.$axios.get(url)
+            var urls = this.HOST + "search";
+            this.$axios({
+                method: 'get',
+                url: urls,
+                params:{
+                    type: "new"
+                }
+            })
             .then(res => {
-                this.newblogs = res.data.data;
+                this.newblogs = res.data;
             })
             .catch(error => {
                 console.log(error);

@@ -75,7 +75,7 @@
                 var asd = this.blogid
                 console.log(this.GLOBAL.BLOGVIEW)
                 if (this.GLOBAL.CountNum(this.blogid)){
-                    var blogview = this.HOST + 'countview'
+                    var blogview = this.HOST + 'visit'
                     this.$axios({
                         method: 'post',
                         url: blogview,

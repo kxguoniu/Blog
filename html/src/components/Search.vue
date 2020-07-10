@@ -34,12 +34,13 @@
                         method: 'get',
                         url: url,
                         params: {
+                            type : "search",
                             title: queryString
                         }
                     })
                     .then(res => {
-                        if (res.data.status == 0) {
-                            this.restaurants = res.data.data
+                        if (res.status == 200) {
+                            this.restaurants = res.data
                             callback(this.restaurants)
                         } else {
                             this.$message.error(res.data.msg)

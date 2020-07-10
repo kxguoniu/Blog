@@ -5,7 +5,7 @@
   "author": "kxguoniu <13213790823@163.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --port 80 --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "node build/build.js"
   },
@@ -15,7 +15,7 @@
     "echarts": "^4.2.0-rc.2",
     "element-ui": "^2.4.11",
     "mavon-editor": "^2.6.17",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.14.1",
     "sass-loader": "^7.1.0",
     "vue": "^2.5.2",
     "vue-awesome-swiper": "^3.1.3",
