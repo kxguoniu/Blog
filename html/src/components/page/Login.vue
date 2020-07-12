@@ -146,7 +146,7 @@
                         data: this.ruleForm,
                     })
                     .then(res => {
-                        if (res.data.status == 0) {
+                        if (res.status == 200) {
                             localStorage.setItem('nkx_username', this.ruleForm.username)
                             console.log('111',this.$route.query.redirect)
                             var redict = /.*(\/blogdetail\/\d+)$/.exec(this.$route.query.redirect)

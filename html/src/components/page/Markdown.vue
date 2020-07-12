@@ -51,7 +51,7 @@
                                                     v-for="item in categorylist"
                                                     :key="item.name"
                                                     :label="item.name"
-                                                    :value="item.name">
+                                                    :value="item.id">
                                                 </el-option>
                                             </el-select>
                                         </el-form-item>
@@ -63,7 +63,7 @@
                                                     v-for="item in tagList"
                                                     :key="item.name"
                                                     :label="item.name"
-                                                    :value="item.name">
+                                                    :value="item.id">
                                                 </el-option>
                                             </el-select>
                                         </el-form-item>
@@ -143,15 +143,33 @@
         },
         created(){
             // 分类,标签 列表请求
-            var url = this.HOST + 'taglist'
+            var url = this.HOST + 'tag'
             this.$axios({
                 url: url,
                 method: 'get',
             })
             .then(res => {
-                console.log(res.data.data);
-                this.tagList = res.data.data.tag;
-                this.categorylist = res.data.data.category;
+                if (res.data.status == 0) {
+                    this.tagList = res.data.data
+                } else {
+                    this.$message.error(res.data.message)
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+            var url2 = this.HOST + 'category'
+            this.$axios({
+                url: url2,
+                method: 'get',
+            })
+            .then(res => {
+                if (res.data.status == 0) {
+                    this.categorylist = res.data.data
+                } else {
+                    this.$message.error(res.data.message)
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -238,7 +256,7 @@
             submit(){
                 this.postForm['author'] = this.author
                 if (this.isEdit) {
-                    let url = this.HOST + 'blog';
+                    let url = this.HOST + 'blog/1';
                     this.$axios({
                         url: url,
                         method: 'put',
@@ -260,7 +278,7 @@
                         this.$message.error('提交失败！')
                     })
                 } else {
-                    let url = this.HOST + 'blog';
+                    let url = this.HOST + 'blog/1';
                     var postForm = this.postForm;
                     this.$axios({
                         url: url,

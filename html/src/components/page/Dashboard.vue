@@ -221,7 +221,10 @@
                 var url = this.HOST + 'visit'
                 this.$axios({
                     method: 'get',
-                    url: url
+                    url: url,
+                    params: {
+                        count: true
+                    }
                 })
                 .then(res => {
                     if (res.data.status == 0){
@@ -230,7 +233,7 @@
                         this.blogsums = res.data.data.blogsums
                         this.lasttime = res.data.data.time
                     } else {
-                        this.$message.error(this.data.msg)
+                        this.$message.error(this.data.message)
                     }
                 })
                 .catch(error => {
@@ -260,9 +263,9 @@
                 this.$refs.bar.renderChart();
                 this.$refs.line.renderChart();
             },
-            // 查看事件
+            // 批量查询
             todoinit(){
-                var url = this.HOST + 'todolist'
+                var url = this.HOST + 'todo'
                 this.$axios({
                     method: 'get',
                     url: url,
@@ -271,7 +274,7 @@
                     if (res.data.status == 0){
                         this.todoList = res.data.data
                     } else {
-                        this.$message.error(res.data.msg)
+                        this.$message.error(res.data.message)
                     }
                 })
                 .catch(error => {
@@ -284,7 +287,7 @@
                 this.addstatus = true
             },
             addEvent(){
-                var url = this.HOST + 'todolist'
+                var url = this.HOST + 'todo/1'
                 this.$axios({
                     method: 'post',
                     url: url,
@@ -292,11 +295,11 @@
                 })
                 .then(res => {
                     if (res.data.status == 0){
-                        this.$message.success(res.data.msg)
+                        this.$message.success(res.data.message)
                         this.addstatus = false
                         this.todoinit()
                     } else {
-                        this.$message.error(res.data.msg)
+                        this.$message.error(res.data.message)
                     }
                 })
                 .catch(error => {
@@ -315,7 +318,7 @@
                 this.putstatus = true
             },
             putEvent(){
-                var url = this.HOST + 'todolist'
+                var url = this.HOST + 'todo/' + this.form.id
                 this.$axios({
                     method: 'put',
                     url: url,
@@ -323,11 +326,11 @@
                 })
                 .then(res => {
                     if (res.data.status == 0){
-                        this.$message.success(res.data.msg)
+                        this.$message.success(res.data.message)
                         this.todoinit()
                         this.putstatus = false
                     } else {
-                        this.$message.error(res.data.msg)
+                        this.$message.error(res.data.message)
                     }
                 })
                 .catch(error => {
@@ -346,19 +349,18 @@
                 this.delstatus = true
             },
             delEvent(){
-                var url = this.HOST + 'todolist'
+                var url = this.HOST + 'todo/' + this.form.id
                 this.$axios({
                     method: 'delete',
-                    url: url,
-                    data: this.form.id
+                    url: url
                 })
                 .then(res => {
                     if (res.data.status == 0){
-                        this.$message.success(res.data.msg)
+                        this.$message.success(res.data.message)
                         this.todoinit()
                         this.delstatus = false
                     } else {
-                        this.$message.error(res.data.msg)
+                        this.$message.error(res.data.message)
                     }
                 })
                 .catch(error => {
@@ -366,19 +368,21 @@
                 })
             },
             visinit(){
-                var url = this.HOST + 'visitor'
+                var url = this.HOST + 'visit'
                 this.$axios({
                     method: 'get',
-                    url: url
+                    url: url,
+                    params: {
+                        seven: true
+                    }
                 })
                 .then(res => {
                     if (res.data.status == 0){
-                        this.data1 = res.data.data
-                        this.data2 = res.data.data2
-                        console.log(this.data1, this.data2)
+                        this.data1 = res.data.data.data
+                        this.data2 = res.data.data.data2
                         this.handleListener()
                     } else {
-                        console.log(res.data.msg)
+                        console.log(res.data.message)
                     }
                 })
                 .catch(error => {
