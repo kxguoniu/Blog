@@ -94,6 +94,7 @@
     import 'mavon-editor/dist/css/index.css'
     import MDinput from '../common/MDinput'
     const defaultForm = {
+        id: '',
         title: '创建博客', // 文章题目
         author: '', // 作者
         category: '', // 分类
@@ -196,6 +197,22 @@
                 })
             } else {
                 this.postForm = Object.assign({}, defaultForm)
+                var session = this.HOST + 'login'
+                this.$axios({
+                    url: session,
+                    method: 'get'
+                })
+                .then(res => {
+                    if (res.data.status == 0) {
+                        this.postForm.id = res.data.data.id
+                        console.log(this.postForm)
+                    } else {
+                        console.log(res.data.message)
+                    }
+                })
+                .catch(error => {
+                    console.log(error)
+                })
             }
         },
         components: {

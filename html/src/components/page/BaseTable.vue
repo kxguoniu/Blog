@@ -98,7 +98,7 @@
                             v-for="item in categorylist"
                             :key="item.name"
                             :label="item.name"
-                            :value="item.name">
+                            :value="item.id">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -164,14 +164,22 @@
         },
         created() {
             this.init();
-            var url = this.HOST + 'taglist'
+            var url = this.HOST + 'tag'
             this.$axios({
                 url: url,
                 method: 'get',
             })
             .then(res => {
-                this.tagList = res.data.data.tag;
-                this.categorylist = res.data.data.category;
+                this.tagList = res.data.data;
+            })
+
+            var url2 = this.HOST + 'category'
+            this.$axios({
+                url: url2,
+                method: 'get',
+            })
+            .then(res => {
+                this.categorylist = res.data.data;
             })
         },
         methods: {
@@ -204,13 +212,12 @@
                 }
             },
             init() {
-                let url = this.HOST + 'bloglist'
+                let url = this.HOST + 'blog'
                 this.$axios({
                     method: 'get',
                     url: url,
                     params:{
-                        search: 'category',
-                        flag: '1', //分类
+                        type: 'category',
                         page: this.listQuery.page,
                         limit: this.listQuery.limit,
                     }
@@ -233,14 +240,14 @@
                     this.init()
                     return
                 }
-                let url = this.HOST + 'search'
+                let url = this.HOST + 'blog'
                 this.$axios({
-                    method: 'put',
+                    method: 'get',
                     url: url,
                     params:{
                         page: this.listQuery.page,
                         limit: this.listQuery.limit,
-                        select: this.select,
+                        type: this.select,
                         value: this.select_word,
                     }
                 })
@@ -327,22 +334,26 @@
             handleSelectionChange(val) {
                 this.del_list = val;
             },
+            filter_category(val) {
+                for (let i = 0; i < this.categorylist.length; i++) {
+                    if (this.categorylist[i].id == val) {
+                        return this.categorylist[i].name
+                    }
+                }
+            },
             // 保存编辑
             saveEdit() {
-                let url = this.HOST + 'blog';
+                let url = this.HOST + 'blog/' + this.form.id;
                 this.$axios({
                     method: 'put',
                     url: url,
-                    params: {
-                        flag: 'head',
-                    },
                     data: this.form
                 })
                 .then(res => {
                     console.log(res.data);
                     if (res.data.status == 0){
                         this.blogList[this.idx]['title'] = this.form['title'];
-                        this.blogList[this.idx]['category'] = this.form['category'];
+                        this.blogList[this.idx]['category'] = this.filter_category(this.form['category']);
                         this.blogList[this.idx]['weight'] = this.form['weight'];
                         this.$set(this.blogList);
                         this.$message.success(`修改第 ${this.idx+1} 行成功`);
@@ -357,13 +368,10 @@
             },
             // 确定删除
             deleteRow(){
-                let url = this.HOST + 'blog'
+                let url = this.HOST + 'blog/' + this.deleteid
                 this.$axios({
                     method: 'delete',
-                    url: url,
-                    params: {
-                        id: this.deleteid,
-                    }
+                    url: url
                 })
                 .then(res => {
                     if (res.data.status == 0){
