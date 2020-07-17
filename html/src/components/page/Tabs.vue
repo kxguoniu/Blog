@@ -22,7 +22,7 @@
                         </el-table-column>
                     </el-table>
                     <div class="handle-row">
-                        <el-button type="primary" @click="handleAll(0,0)">全部标为已读</el-button>
+                        <el-button type="primary" @click="handleAll(0,1)">全部标为已读</el-button>
                     </div>
                 </el-tab-pane>
                 <el-tab-pane :label="`已读消息(${datatwo(1).length})`" name="second">
@@ -106,18 +106,16 @@
             },
             // 信息修改
             submit(msgid,status){
-                var url = this.HOST + 'message'
+                var url = this.HOST + 'message/' + msgid
                 this.$axios({
-                    method: 'post',
+                    method: 'put',
                     url: url,
-                    params: {
-                        msgid: msgid,
-                        status: status
-                    }
+                    data: {status: status}
                 })
                 .then(res => {
                     if (res.data.status == 0) {
-                        this.lists = res.data.data
+                        // this.lists = res.data.data
+                        this.init()
                         this.$message.success('操作成功')
                         //this.msglist = res.data.data
                     } else {
@@ -173,13 +171,13 @@
             // 全部操作
             handleAll(start, end){
                 var dellist = this.datatwo(start)
-                for (let i = 0; i < this.lists.length; i++) {
-                    for (let j = 0; j < dellist.length; j++) {
-                        if (dellist[j].id == this.lists[i].id) {
-                            this.lists[i].status = end
-                        }
-                    }
-                }
+                // for (let i = 0; i < this.lists.length; i++) {
+                //     for (let j = 0; j < dellist.length; j++) {
+                //         if (dellist[j].id == this.lists[i].id) {
+                //             this.lists[i].status = end
+                //         }
+                //     }
+                // }
                 dellist.filter((d) => {
                     this.submit(d.id, end)
                 })

@@ -178,14 +178,10 @@
             // 编辑博文,请求
             if (this.isEdit){
                 const id = this.$route.params && this.$route.params.id
-                let url = this.HOST + 'blog'
+                let url = this.HOST + 'blog/' + id
                 this.$axios({
                     method: 'get',
-                    url: url,
-                    params:{
-                        id: id,
-                        json: false
-                    }
+                    url: url
                 })
                 .then(res => {
                     console.log(res.data)
@@ -273,13 +269,10 @@
             submit(){
                 this.postForm['author'] = this.author
                 if (this.isEdit) {
-                    let url = this.HOST + 'blog/1';
+                    let url = this.HOST + 'blog/' + this.postForm.id;
                     this.$axios({
                         url: url,
                         method: 'put',
-                        params: {
-                            flag: 'body',
-                        },
                         data: this.postForm,
                         headers: { 'Content-Type': 'multipart/form-data' },
                     })
